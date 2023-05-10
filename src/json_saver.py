@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 class JSONSaver():
-    """Класс для сохранение информации о вакансиях в файл"""
+    """Класс для сохранения информации о вакансиях в файл"""
     path_file = "../src/vacancies.json"
 
     def __init__(self):
