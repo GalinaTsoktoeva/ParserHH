@@ -1,13 +1,34 @@
 import json
 import os
 from pathlib import Path
+from abc import ABC, abstractmethod
 
-class JSONSaver():
+class Saver(ABC):
+
+    @abstractmethod
+    def add_vacancy(self):
+        pass
+
+    @abstractmethod
+    def get_vacancies_by_salary(self):
+        pass
+
+    @abstractmethod
+    def delete_vacancy(self):
+        pass
+
+class JSONSaver(Saver):
     """Класс для сохранения информации о вакансиях в файл"""
     path_file = "../src/vacancies.json"
 
     def __init__(self):
-        pass
+        self.name = "JSON формат"
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}"
+
+    def __str__(self):
+        return f"{self.name}"
 
     def add_vacancy(self, vacancy):
         """Функция для добавления вакансии в файл"""
@@ -29,6 +50,7 @@ class JSONSaver():
 
         except FileNotFoundError:
             print(f"Не найден файл + {JSONSaver.path_file}")
+            return {}
 
     def get_vacancies_by_salary(self, salary):
         """Функция для фильтрации вакансий по зарплате"""
@@ -42,6 +64,7 @@ class JSONSaver():
                 vacancies = json.loads(path.read_text(encoding="utf-8"))
         except FileNotFoundError:
             print(f"Не найден файл + {JSONSaver.path_file}")
+            return
 
         for item in vacancies:
 
@@ -69,6 +92,7 @@ class JSONSaver():
                 vacancies = json.loads(path.read_text(encoding="utf-8"))
         except FileNotFoundError:
             print(f"Не найден файл + {JSONSaver.path_file}")
+            return {}
 
         delete_list = []
         for num, item in enumerate(vacancies):
@@ -84,4 +108,5 @@ class JSONSaver():
                 json.dump(vacancies, file, ensure_ascii=False, indent='\t', separators=(', ', ': '))
         except FileNotFoundError:
             print(f"Не найден файл + {JSONSaver.path_file}")
+            return {}
 
