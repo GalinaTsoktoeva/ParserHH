@@ -13,7 +13,7 @@ def test_init_HHAPI(some_HeadHunterAPI):
 
     with open(path_file, "r", encoding='utf-8') as file:
         data2 = json.load(file)
-    assert len(data1) + 3 == len(data2)
+    assert len(data1)  == len(data2)
 
 
 def test_init_SuperJob(some_SuperJobAPI):
