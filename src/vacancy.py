@@ -12,6 +12,12 @@ class Vacancy():
         self.requirements = requirements
         self.employer = employer
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.name}', {self.url}, {self.employer})"
+
+    def __str__(self):
+        return f"{self.name}"
+
     def dict_vacancy(self):
         vacancy = {}
         vacancy['name'] = self.name
@@ -29,9 +35,12 @@ class Vacancy():
         """Функция для фильтрации вакансий по ключевым словам"""
         result = []
         path_file = "../src/vacancies.json"
-
-        with open(path_file, "r", encoding='utf-8') as file:
-            vacancies = json.load(file)
+        try:
+            with open(path_file, "r", encoding='utf-8') as file:
+                vacancies = json.load(file)
+        except FileNotFoundError:
+            print(f"Не найден файл + {path_file}")
+            return {}
 
         for word in filter_words:
             for item in vacancies:
