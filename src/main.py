@@ -18,7 +18,9 @@ def main():
 
     # Получение вакансий с разных платформ
     hh_vacancies = hh_api.get_vacancies(vacancy="Python", path_file="../src/vacancies.json")
+
     superjob_vacancies = superjob_api.get_vacancies(vacancy="Python")
+
 
     # Создание экземпляра класса для работы с вакансиями
     vacancy = Vacancy(name="Python Developer", url="<https://hh.ru/vacancy/123456>", area="Москва", salary_from=100_000,
@@ -39,6 +41,7 @@ def main():
         top_n = int(input("Введите количество вакансий для вывода в топ N: "))
         filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()
         filtered_vacancies = vacancy.filter_vacancies(filter_words)
+        #print(filtered_vacancies)
 
         if not filtered_vacancies:
             print("Нет вакансий, соответствующих заданным критериям.")
