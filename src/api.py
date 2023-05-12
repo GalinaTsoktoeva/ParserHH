@@ -10,7 +10,7 @@ import time
 class Api(ABC):
 
     @abstractmethod
-    def get_vacancies(self):
+    def get_vacancies(self, vacancy):
         pass
 
 
@@ -27,7 +27,7 @@ class HeadHunterAPI(Api):
     def __str__(self):
         return f"{self.name}"
 
-    def get_vacancies(self, page=0, vacancy="Python", path_file=None):
+    def get_vacancies(self, page=0, vacancy="", path_file=None):
         """Парсинг 500 вакансий c сайта"""
         for page_no in range(5):
             params = {
@@ -88,7 +88,7 @@ class SuperJobAPI(Api):
     def __str__(self):
         return f"{self.name}"
 
-    def get_vacancies(self, vacancy="Python"):
+    def get_vacancies(self, vacancy):
         """Парсинг 500 вакансий  сайта"""
         vacancies_list = []
         for page_no in range(5):

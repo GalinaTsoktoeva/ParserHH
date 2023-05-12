@@ -12,14 +12,15 @@ def get_top_vacancies(sorted_vacancies, top_n):
 def main():
     # Use a breakpoint in the code line below to debug your script.
     # Создание экземпляра класса для работы с API сайтов с вакансиями
+    word_for_search = input('Введите вакансию для поиска: ').strip()
 
     hh_api = HeadHunterAPI()
     superjob_api = SuperJobAPI()
 
     # Получение вакансий с разных платформ
-    hh_vacancies = hh_api.get_vacancies(vacancy="Python", path_file="../src/vacancies.json")
+    hh_vacancies = hh_api.get_vacancies(vacancy=word_for_search, path_file="../src/vacancies.json")
 
-    superjob_vacancies = superjob_api.get_vacancies(vacancy="Python")
+    superjob_vacancies = superjob_api.get_vacancies(vacancy=word_for_search)
 
 
     # Создание экземпляра класса для работы с вакансиями
@@ -37,7 +38,7 @@ def main():
     # Функция для взаимодействия с пользователем
     def user_interaction():
         platforms = ["HeadHunter", "SuperJob"]
-        search_query = input("Введите поисковый запрос: ")
+        #search_query = input("Введите поисковый запрос: ")
         top_n = int(input("Введите количество вакансий для вывода в топ N: "))
         filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()
         filtered_vacancies = vacancy.filter_vacancies(filter_words)
