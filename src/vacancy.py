@@ -18,6 +18,14 @@ class Vacancy():
     def __str__(self):
         return f"{self.name}"
 
+    def __repr__(self):
+        return f'Наименование вакансии: {self.name}\nРаботодатель: {self.employer}\nСсылка на вакансию:' \
+               f' {self.url}\nОписание вакансии: {self.requirements}\nМесто работы: {self.area}\nЗарплата:' \
+               f' {self.salary_to}\n'
+
+    def __gt__(self, other):
+        return self.salary_to > other.salary_to
+
     def dict_vacancy(self):
         vacancy = {}
         vacancy['name'] = self.name
