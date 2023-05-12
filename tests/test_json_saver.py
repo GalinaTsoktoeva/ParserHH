@@ -7,7 +7,7 @@ def test_get_vacancies_by_salary(some_JSONSaver):
 
 def test_delete_vacancy(some_JSONSaver, some_Vacancy):
 
-    path_file="../src/vacancies.json"
+    path_file = "../src/vacancies.json"
 
     with open(path_file, "r", encoding='utf-8') as file:
         data1 = json.load(file)

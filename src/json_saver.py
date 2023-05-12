@@ -1,5 +1,5 @@
 import json
-import os
+import JSONException
 from pathlib import Path
 from abc import ABC, abstractmethod
 
@@ -33,24 +33,27 @@ class JSONSaver(Saver):
     def add_vacancy(self, vacancy):
         """Функция для добавления вакансии в файл"""
         try:
-            with open(JSONSaver.path_file, 'r', encoding='utf-8') as f:
+            with open(JSONSaver.path_file, 'a+', encoding='utf-8') as f:
+                f.seek(0)
+                first_line = f.readline()
+                if first_line:
+                    try:
+                        f.seek(0)
+                        data = json.load(f)
+                        assert type(data) == list
+                        for item in data:
+                            if item.get('url') == vacancy.get('url'):
+                                return
 
-                if os.path.getsize(JSONSaver.path_file) == 0:
-                    data = []
+                        with open(JSONSaver.path_file, 'w', encoding="utf-8") as file:
+                            data.append(vacancy)
+                            json.dump(data, file, ensure_ascii=False, indent='\t', separators=(', ', ': '))
+                    except:
+                        raise JSONException()
                 else:
-                    data = json.load(f)
-
-            for item in data:
-                if item.get('url') == vacancy.get('url'):
-                    return
-
-            with open(JSONSaver.path_file, 'w', encoding="utf-8") as file:
-                data.append(vacancy)
-                json.dump(data, file, ensure_ascii=False, indent='\t', separators=(', ', ': '))
-
+                    json.dump([], f)
         except FileNotFoundError:
-            print(f"Не найден файл + {JSONSaver.path_file}")
-            return {}
+            json.dump([], f)
 
     def get_vacancies_by_salary(self, salary):
         """Функция для фильтрации вакансий по зарплате"""
